@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercise 1</title>
+
+    <style>
+      .bordered {
+        line-height: 0.5rem;
+        font-family: Roboto, "Segoe UI", sans-serif;
+        border: 2px solid grey;
+        height: 200px;
+        overflow-y: hidden;
+        padding: 0 2rem;
+        width: 50%;
+        border-radius: 0.5rem;
+      }
+
+      .marquee p {
+        animation: marquee 106s linear;
+        animation-delay: 10s;
+      }
+
+      @keyframes marquee {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(0, -5000%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <iframe
+      width="50%"
+      height="500px"
+      src="https://www.youtube.com/embed/Yib_s5UeGvc?autoplay=1"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe> -->
+
+    <div class="bordered" id="lyrics">
+      <!-- the lyrics will display here -->
+    </div>
+
+
+    <div id="player"></div>
+
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement("script");
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+          height: "390",
+          width: "640",
+          videoId: "Dn134-16mgE",
+          events: {
+            onReady: onPlayerReady,
+            onStateChange: onPlayerStateChange,
+          },
+            playerVars: { 'autoplay': 0, 'controls': 0 },
+
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        // event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+            document.getElementById("lyrics").classList.add("marquee");
+          done = true;
+        }
+        if (event.data == YT.PlayerState.PAUSED && !done) {
+            document.getElementById("lyrics").style.animationPlayState="paused"
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+    </script>
+
+    <script>
+      let lyrics = `Sintang Paaralan
+      Tanglaw ka ng bayan
+      Pandayan ng isip ng kabataan
+      Kami ay dumating nang salat sa yaman
+      Hanap na dunong ay iyong alay
+      Ang layunin mong makatao
+      Dinarangal ang Pilipino
+      Ang iyong aral, diwa, adhikang taglay
+      PUP, aming gabay
+      Paaralang dakila
+      PUP, pinagpala
+      Gagamitin ang karunungan
+      Mula sa iyo, para sa bayan
+      Ang iyong aral, diwa, adhikang taglay
+      PUP, aming gabay
+      Paaralang dakila
+      PUP, pinagpala
+    `;
+      let element;
+
+      lyrics.split("\n").forEach((e) => {
+        element = document.createElement("p");
+        element.innerText = e;
+        document.getElementById("lyrics").appendChild(element);
+      });
+    </script>
+  </body>
+</html>
