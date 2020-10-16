@@ -6,20 +6,26 @@
     <title>Exercise 1</title>
 
     <style>
+      body {
+        padding: 0;
+        margin: 0;
+        font-family: Roboto, "Segoe UI", sans-serif;
+        min-height: 100vh;
+      }
       .bordered {
         line-height: 0.5rem;
-        font-family: Roboto, "Segoe UI", sans-serif;
         border: 2px solid grey;
         height: 200px;
         overflow-y: hidden;
-        padding: 0 2rem;
-        width: 50%;
+        padding: 0.3rem 2rem;
+        width: 30%;
         border-radius: 0.5rem;
+        min-width: 400px;
       }
 
       .marquee p {
         animation: marquee 106s linear;
-        animation-delay: 10s;
+        /* animation-delay: 10s; */
       }
 
       @keyframes marquee {
@@ -30,72 +36,72 @@
           transform: translate(0, -5000%);
         }
       }
+
+      .paused p {
+        animation-play-state: paused;
+      }
+
+      nav {
+        background: rgb(126, 15, 15);
+        width: 100%;
+        padding: 1rem 2rem;
+      }
+
+      nav a.nav-link {
+        color: white;
+        text-decoration: none;
+      }
+
+      main {
+        min-height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-direction: column;
+      }
+
+      #audio {
+        outline: none;
+      }
+
+      footer {
+        position: absolute;
+        bottom: 0;
+        line-height: 0.5rem;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
-    <!-- <iframe
-      width="50%"
-      height="500px"
-      src="https://www.youtube.com/embed/Yib_s5UeGvc?autoplay=1"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    ></iframe> -->
+    <nav>
+      <a href="#" class="nav-link">Polytechnic University of the Philippines</a>
+    </nav>
 
-    <div class="bordered" id="lyrics">
-      <!-- the lyrics will display here -->
-    </div>
+    <main>
+      <h1>PUP Hymn</h1>
+      <div class="bordered" id="lyrics">
+        <!-- the lyrics will display here -->
+      </div>
 
+      <br />
+      <br />
+      <br />
 
-    <div id="player"></div>
+      <audio
+        controls
+        id="audio"
+        onplay="playedListener()"
+        onpause="pausedListener()"
+      >
+        <source src="imno-ng-pup.mp3" type="audio/mpeg" />
+      </audio>
 
-    <script>
-      // 2. This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement("script");
-
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName("script")[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      var player;
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player("player", {
-          height: "390",
-          width: "640",
-          videoId: "Dn134-16mgE",
-          events: {
-            onReady: onPlayerReady,
-            onStateChange: onPlayerStateChange,
-          },
-            playerVars: { 'autoplay': 0, 'controls': 0 },
-
-        });
-      }
-
-      // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
-        // event.target.playVideo();
-      }
-
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      var done = false;
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-            document.getElementById("lyrics").classList.add("marquee");
-          done = true;
-        }
-        if (event.data == YT.PlayerState.PAUSED && !done) {
-            document.getElementById("lyrics").style.animationPlayState="paused"
-        }
-      }
-      function stopVideo() {
-        player.stopVideo();
-      }
-    </script>
+      <footer>
+        <p id="name"></p>
+        <p id="section"></p>
+      </footer>
+    </main>
 
     <script>
       let lyrics = `Sintang Paaralan
@@ -120,9 +126,21 @@
 
       lyrics.split("\n").forEach((e) => {
         element = document.createElement("p");
+        element.setAttribute("class", "text");
         element.innerText = e;
         document.getElementById("lyrics").appendChild(element);
       });
+
+      document.getElementById("name").innerText = "Michael C. Bataller";
+      document.getElementById("section").innerText = "BSCpE 3-7P";
+
+      function playedListener() {
+        document.getElementById("lyrics").classList = "bordered marquee";
+      }
+
+      function pausedListener() {
+        document.getElementById("lyrics").classList = "bordered marquee paused";
+      }
     </script>
   </body>
 </html>
