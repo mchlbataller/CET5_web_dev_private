@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercise 1</title>
+
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        font-family: Roboto, "Segoe UI", sans-serif;
+        min-height: 100vh;
+      }
+      .bordered {
+        line-height: 0.5rem;
+        border: 2px solid grey;
+        height: 200px;
+        overflow-y: hidden;
+        padding: 0.3rem 2rem;
+        width: 30%;
+        border-radius: 0.5rem;
+        min-width: 400px;
+      }
+
+      .marquee p {
+        animation: marquee 106s linear;
+        /* animation-delay: 10s; */
+      }
+
+      @keyframes marquee {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(0, -5000%);
+        }
+      }
+
+      .paused p {
+        animation-play-state: paused;
+      }
+
+      nav {
+        background: rgb(126, 15, 15);
+        width: 100%;
+        padding: 1rem 2rem;
+      }
+
+      nav a.nav-link {
+        color: white;
+        text-decoration: none;
+      }
+
+      main {
+        min-height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-direction: column;
+      }
+
+      #audio {
+        outline: none;
+      }
+
+      footer {
+        position: absolute;
+        bottom: 0;
+        line-height: 0.5rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="#" class="nav-link">Polytechnic University of the Philippines</a>
+    </nav>
+
+    <main>
+      <h1>PUP Hymn</h1>
+      <div class="bordered" id="lyrics">
+        <!-- the lyrics will display here -->
+      </div>
+
+      <br />
+      <br />
+      <br />
+
+      <audio
+        controls
+        id="audio"
+        onplay="playedListener()"
+        onpause="pausedListener()"
+      >
+        <source src="imno-ng-pup.mp3" type="audio/mpeg" />
+      </audio>
+
+      <footer>
+        <p id="name"></p>
+        <p id="section"></p>
+      </footer>
+    </main>
+
+    <script>
+      let lyrics = `Sintang Paaralan
+      Tanglaw ka ng bayan
+      Pandayan ng isip ng kabataan
+      Kami ay dumating nang salat sa yaman
+      Hanap na dunong ay iyong alay
+      Ang layunin mong makatao
+      Dinarangal ang Pilipino
+      Ang iyong aral, diwa, adhikang taglay
+      PUP, aming gabay
+      Paaralang dakila
+      PUP, pinagpala
+      Gagamitin ang karunungan
+      Mula sa iyo, para sa bayan
+      Ang iyong aral, diwa, adhikang taglay
+      PUP, aming gabay
+      Paaralang dakila
+      PUP, pinagpala
+    `;
+      let element;
+
+      lyrics.split("\n").forEach((e) => {
+        element = document.createElement("p");
+        element.setAttribute("class", "text");
+        element.innerText = e;
+        document.getElementById("lyrics").appendChild(element);
+      });
+
+      document.getElementById("name").innerText = "Michael C. Bataller";
+      document.getElementById("section").innerText = "BSCpE 3-7P";
+
+      function playedListener() {
+        document.getElementById("lyrics").classList = "bordered marquee";
+      }
+
+      function pausedListener() {
+        document.getElementById("lyrics").classList = "bordered marquee paused";
+      }
+    </script>
+  </body>
+</html>
