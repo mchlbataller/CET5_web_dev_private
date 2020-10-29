@@ -162,6 +162,13 @@
     }
 
     document.getElementById("lyrics").innerHTML = document.getElementById("marquee").innerHTML;
+
+    document.getElementById("marquee").remove = function() {
+        if (this.parentNode) {
+            this.parentNode.removeChild(this);
+        }
+    };
+
     document.getElementById("marquee").remove();
   </script>
 </body>
