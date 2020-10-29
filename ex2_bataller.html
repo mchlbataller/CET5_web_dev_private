@@ -17,7 +17,7 @@
     .bordered {
       line-height: 0.5rem;
       border: 2px solid grey;
-      height: 200px;
+      height: 500px;
       overflow-y: hidden;
       padding: 0.3rem 2rem;
       width: 30%;
@@ -84,7 +84,7 @@
 
   <main>
     <h1>PUP Hymn</h1>
-    <marquee id="marquee" scrollamount="1">
+    <marquee scrollamount="1" class="bordered" id="lyrics" direction="up">
       <!-- the lyrics will display here -->
       <p class="text"> Sintang Paaralan</p>
       <p class="text"> Tanglaw ka ng bayan</p>
@@ -105,14 +105,13 @@
       <p class="text"> PUP, pinagpala</p>
       <p class="text"> </p>
     </marquee>
-
-    <div class="bordered" id="lyrics" direction="up"></div>
+ 
 
     <br />
     <br />
     <br />
 
-    <audio controls id="audio" onplay="playedListener()" onpause="pausedListener()">
+    <audio controls id="audio">
       <source src="imno-ng-pup.mp3" type="audio/mpeg" />
     </audio>
 
@@ -161,7 +160,7 @@
       document.getElementById("lyrics").classList = "bordered marquee paused";
     }
 
-    document.getElementById("lyrics").innerHTML = document.getElementById("marquee").innerHTML;
+    // document.getElementById("lyrics").innerHTML = document.getElementById("marquee").innerHTML;
 
     document.getElementById("marquee").remove = function() {
         if (this.parentNode) {
